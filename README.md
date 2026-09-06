@@ -12,9 +12,12 @@ name remains `manipulation_core`. This is a learning and portfolio reference
 workflow, with runtime validation in the Panda demo.
 
 <div align="center">
-  <img width="1916" height="1027" alt="Franka Panda MoveIt 2 demo running in RViz2" src="https://github.com/user-attachments/assets/77321600-efcf-4997-93c9-26d095deed6a" />
+  <img width="960" height="515" alt="Franka Panda executing a MoveIt 2 target-pose motion in RViz2" src="https://github.com/user-attachments/assets/dca20eab-dd1b-44f5-8020-d4f5d7895fdc" />
   <br>
-  <em>Franka Panda MoveIt 2 demo in RViz2 with the <code>panda_arm</code> planning group.</em>
+  <em>
+    Franka Panda executing a MoveIt 2 target-pose motion in RViz2,
+    with an approximately 3 cm positive-X end-effector target displacement.
+  </em>
 </div>
 
 ## Verified Runtime Example
@@ -33,6 +36,15 @@ Client-side planning latency measures the `plan()` call; execution latency
 measures `execute(plan)`. Total latency covers the plan + execute workflow,
 including intervening logging and handling, but excluding input validation and
 TF transformation.
+
+<div align="center">
+  <img width="1488" height="341" alt="ROS 2 MoveIt 2 Panda successful planning and execution log" src="https://github.com/user-attachments/assets/c23181bc-f779-405d-b175-ea515fe6d2c1" />
+  <br>
+  <em>
+    Execution log from a separate successful Panda demo run, showing target-pose handling,
+    successful planning and execution, and latency instrumentation. Timing varies between runs.
+  </em>
+</div>
 
 ## Architecture
 
