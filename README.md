@@ -11,17 +11,34 @@ The GitHub repository is named `ros2-moveit2-panda-manipulation`; the ROS packag
 name remains `manipulation_core`. This is a learning and portfolio reference
 workflow, with runtime validation in the Panda demo.
 
+## Verified Runtime Example
+
+One verified Panda demo run completed successfully with joint-state feedback:
+
+| Measurement | Approximate elapsed time |
+| --- | ---: |
+| Client-side planning latency | 67.6 ms |
+| Execution latency | 3198 ms |
+| Total plan + execute latency | 3266 ms |
+
+These values are from **one verified runtime test**, not benchmark averages.
+Timing varies by machine, planner state, target pose, and environment.
+Client-side planning latency measures the `plan()` call; execution latency
+measures `execute(plan)`. Total latency covers the plan + execute workflow,
+including intervening logging and handling, but excluding input validation and
+TF transformation.
+
 ## Architecture
 
 ```mermaid
-flowchart TD
-    A["/target_pose: geometry_msgs/msg/PoseStamped"] --> B[TargetPoseSubscriber]
-    B --> C[Reject empty frame_id]
-    C --> D[TF2 transform when frames differ]
-    D --> E["Active MoveIt planning frame: getPlanningFrame()"]
-    E --> F["MoveGroupInterface: panda_arm / current state"]
-    F --> G["MoveIt / OMPL motion planning"]
-    G --> H["execute(plan), only on planning success"]
+flowchart LR
+    A["/target_pose<br/>PoseStamped"] --> B[TargetPoseSubscriber]
+    B --> C["Frame validation<br/>Reject empty frame_id"]
+    C --> D["TF2 transform<br/>when frames differ"]
+    D --> E["Active planning frame<br/>getPlanningFrame()"]
+    E --> F["MoveGroupInterface<br/>panda_arm / current state"]
+    F --> G["MoveIt / OMPL<br/>motion planning"]
+    G --> H["execute(plan)<br/>only on planning success"]
     H --> I[panda_arm_controller]
     I --> J[Joint-state feedback]
     J --> F
@@ -149,24 +166,6 @@ needed). The launch command was checked against the installed demo launch file;
 the executable was checked after building. Motion was not rerun during this
 documentation pass. These instructions describe the author's previously
 validated demo workflow, not physical robot operation.
-
-## Verified Runtime Example
-
-The author reported one successful Panda demo execution with joint-state feedback:
-
-| Measurement | Approximate elapsed time |
-| --- | ---: |
-| Client-side planning latency | 67.6 ms |
-| Execution latency | 3198 ms |
-| Total plan + execute latency | 3266 ms |
-
-These values are from **one verified run**, not benchmark averages. Timing varies
-by machine, planner state, target pose, and environment. Client-side planning time
-measures the `plan()` call, including communication/waiting; execution time
-measures `execute(plan)`. Total time starts just before planning and includes
-intervening logging/handling, but excludes input validation and TF transformation.
-The source supports these measurements; the historical values are from the
-author's runtime notes, with no raw trace committed here.
 
 ## TF / Planning Frame Verification
 
