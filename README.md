@@ -31,17 +31,25 @@ TF transformation.
 ## Architecture
 
 ```mermaid
-flowchart LR
-    A["/target_pose<br/>PoseStamped"] --> B[TargetPoseSubscriber]
-    B --> C["Frame validation<br/>Reject empty frame_id"]
-    C --> D["TF2 transform<br/>when frames differ"]
-    D --> E["Active planning frame<br/>getPlanningFrame()"]
-    E --> F["MoveGroupInterface<br/>panda_arm / current state"]
-    F --> G["MoveIt / OMPL<br/>motion planning"]
-    G --> H["execute(plan)<br/>only on planning success"]
-    H --> I[panda_arm_controller]
-    I --> J[Joint-state feedback]
-    J --> F
+flowchart TB
+    subgraph input_row["Target processing"]
+        direction LR
+        A["/target_pose<br/>PoseStamped"] --> B["TargetPoseSubscriber"]
+        B --> C["PoseStamped / frame validation<br/>Reject empty frame_id"]
+        C --> D["TF2 transform<br/>when frames differ"]
+        D --> E["Active MoveIt planning frame<br/>getPlanningFrame()"]
+    end
+
+    subgraph motion_row["Planning and execution"]
+        direction LR
+        F["MoveGroupInterface<br/>panda_arm / current robot state"] --> G["MoveIt / OMPL<br/>motion planning"]
+        G --> H["execute(plan)<br/>only on planning success"]
+        H --> I["panda_arm_controller"]
+        I --> J["Joint-state feedback"]
+        J -.-> F
+    end
+
+    input_row --> motion_row
 ```
 
 MoveIt, OMPL, controllers, and joint-state publication belong to the external
@@ -68,7 +76,7 @@ select OMPL. The inspected Panda demo enables OMPL as its default pipeline.
 
 ## Environment
 
-The author's verified runtime environment:
+Verified environment:
 
 - Ubuntu 24.04 under WSL2
 - ROS 2 Jazzy
