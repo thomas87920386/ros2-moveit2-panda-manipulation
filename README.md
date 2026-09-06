@@ -122,27 +122,26 @@ robot descriptions used by MoveGroupInterface.
 ### 3. Publish an example target
 
 This example is for the standard Panda demo configuration with planning frame
-`world`. The recorded start position was approximately `(0.307, 0.000, 0.590)` m;
-the target was `(0.337, 0.000, 0.590)` m with unchanged orientation. It represents
+`world`. The recorded `panda_hand` start position was approximately
+`(0.307, 0.000, 0.590)` m; the target was `(0.337, 0.000, 0.590)` m.
+Both poses used the verified quaternion `(x, y, z, w) = (1.0, 0.0, 0.0, 0.0)`
+in ROS xyzw order, keeping the same orientation. This represents
 approximately 3 cm of positive-X end-effector displacement only from that start.
 The planned path is not constrained to be a straight Cartesian line.
 
-The original quaternion was not recorded in the supplied runtime notes. Obtain
-the current orientation for the arm tip (`panda_link8` in the inspected demo's
-`panda_arm` chain), and confirm the starting position before using this example:
+Confirm the current `panda_hand` pose before using this example:
 
 ```bash
-ros2 run tf2_ros tf2_echo world panda_link8
+ros2 run tf2_ros tf2_echo world panda_hand
 ```
 
-Copy the quaternion `[x, y, z, w]` from that output, stop `tf2_echo` with Ctrl-C,
-and enter those four values when prompted below. Do this while the demo is idle;
-if the current position differs, the absolute target below is a different motion.
+Stop `tf2_echo` with Ctrl-C. With the demo idle, confirm that the current position
+and orientation match the recorded start pose; otherwise, the absolute target
+below is a different motion.
 
 ```bash
-read -r -p "Current quaternion x y z w: " QX QY QZ QW
 ros2 topic pub --once /target_pose geometry_msgs/msg/PoseStamped \
-  "{header: {frame_id: 'world'}, pose: {position: {x: 0.337, y: 0.000, z: 0.590}, orientation: {x: ${QX:?}, y: ${QY:?}, z: ${QZ:?}, w: ${QW:?}}}"
+  "{header: {frame_id: 'world'}, pose: {position: {x: 0.337, y: 0.000, z: 0.590}, orientation: {x: 1.0, y: 0.0, z: 0.0, w: 0.0}}}"
 ```
 
 The omitted stamp defaults to zero (latest available transform when TF2 is
