@@ -12,7 +12,7 @@ name remains `manipulation_core`. This is a learning and portfolio reference
 workflow, with runtime validation in the Panda demo.
 
 <div align="center">
-  <img width="1916" height="1027" alt="image" src="https://github.com/user-attachments/assets/77321600-efcf-4997-93c9-26d095deed6a" />
+  <img width="1916" height="1027" alt="Franka Panda MoveIt 2 demo running in RViz2" src="https://github.com/user-attachments/assets/77321600-efcf-4997-93c9-26d095deed6a" />
   <br>
   <em>Franka Panda MoveIt 2 demo in RViz2 with the <code>panda_arm</code> planning group.</em>
 </div>
