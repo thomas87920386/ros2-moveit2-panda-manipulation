@@ -19,11 +19,19 @@ workflow, with runtime validation in the Panda demo.
     moving approximately 3 cm along the positive X-axis and returning to the starting pose.
   </em>
 </div>
-<!-- <img width="960" height="515" alt="Franka Panda executing a MoveIt 2 target-pose motion in RViz2" src="https://github.com/user-attachments/assets/dca20eab-dd1b-44f5-8020-d4f5d7895fdc" /> -->
 
 ## Verified Runtime Example
 
 One verified Panda demo run completed successfully with joint-state feedback:
+
+<div align="center">
+  <img width="960" alt="Franka Panda executing a MoveIt 2 target-pose motion in RViz2" src="https://github.com/user-attachments/assets/dca20eab-dd1b-44f5-8020-d4f5d7895fdc" />
+  <br />
+  <em>
+    Franka Panda executing a MoveIt 2 target-pose motion in RViz2,
+    with an approximately 3 cm positive-X end-effector target displacement.
+  </em>
+</div>
 
 | Measurement | Approximate elapsed time |
 | --- | ---: |
