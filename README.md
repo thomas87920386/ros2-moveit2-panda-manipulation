@@ -12,13 +12,14 @@ name remains `manipulation_core`. This is a learning and portfolio reference
 workflow, with runtime validation in the Panda demo.
 
 <div align="center">
-  <img width="960" height="515" alt="Franka Panda executing a MoveIt 2 target-pose motion in RViz2" src="https://github.com/user-attachments/assets/dca20eab-dd1b-44f5-8020-d4f5d7895fdc" />
+  <img width="1274" height="720" alt="IsaacSim_Franka_MoveIt_Portfolio_Demo" src="https://github.com/user-attachments/assets/b1096877-3a98-4a41-949f-e31a8e6e53e8" />
   <br>
   <em>
-    Franka Panda executing a MoveIt 2 target-pose motion in RViz2,
-    with an approximately 3 cm positive-X end-effector target displacement.
+    Franka Panda executing a runtime-verified ROS 2 Jazzy / MoveIt 2 target-pose motion in NVIDIA Isaac Sim,
+    moving approximately 3 cm along the positive X-axis and returning to the starting pose.
   </em>
 </div>
+<!-- <img width="960" height="515" alt="Franka Panda executing a MoveIt 2 target-pose motion in RViz2" src="https://github.com/user-attachments/assets/dca20eab-dd1b-44f5-8020-d4f5d7895fdc" /> -->
 
 ## Verified Runtime Example
 
