@@ -46,6 +46,51 @@ TF transformation.
   </em>
 </div>
 
+## NVIDIA Isaac Sim Runtime Verification
+
+The existing **unchanged C++ node** was integrated with NVIDIA's `isaac_moveit`
+Franka workflow and completed one runtime-verified motion in Isaac Sim:
+
+```text
+PoseStamped -> target_pose_subscriber -> MoveIt plan(plan) -> execute(plan)
+-> panda_arm_controller -> Isaac Sim Franka motion -> joint-state feedback
+```
+
+The generated plan was passed to `execute(plan)` without a second planning
+cycle. The user visually confirmed Panda motion in the Isaac Sim viewer.
+
+| Verified configuration / result | Value |
+| --- | --- |
+| Isaac Sim | `6.0.1-rc.7+release.42383.32955d8d.gl` |
+| ROS 2 / middleware | Jazzy / Fast DDS |
+| Planning frame / end-effector frame | `world` / `panda_link8` |
+| Target | Freshly queried current pose +3 cm X; Y, Z and orientation preserved |
+| Planning | Success, code `1`; 98.839 ms |
+| Execution | Success, code `1`; 3972.122 ms |
+| Total plan + execute latency | 4071.073 ms |
+| Measured X motion | 29.59 mm |
+| Controller action | `/panda_arm_controller/follow_joint_trajectory` |
+| Visible motion | Confirmed by the user |
+
+These are **a single runtime result, not a benchmark**. Timing uses the existing
+client-side instrumentation described above. The observed final position was
+approximately 1.51 mm from the target; controller success does not imply exact
+physical tracking. A pose target does not constrain the path to a straight line.
+The target was already in `world`, so this run did not test cross-frame target
+transformation.
+
+Two environment-specific integration findings enabled this run:
+
+- ROS processes needed to run as `ubuntu`, matching the running Isaac process,
+  to resolve Fast DDS shared-memory permissions. The middleware was retained.
+- The node was supplied the live MoveIt robot model parameters (URDF, SRDF and
+  kinematics), with `use_sim_time` enabled. No C++ source changes were required.
+
+[Sanitized runtime evidence](evidence/isaac_sim/runtime-result-3cm.json) includes
+full-precision start, target and observed end poses, result codes, timings and
+feedback summary. Raw debug logs and cloud connection details are excluded.
+The Panda demo instructions below describe the separate local demo setup.
+
 ## Architecture
 
 ```mermaid
@@ -227,8 +272,8 @@ planning and execution timers made their respective costs visible.
 - Collect repeated timing samples and percentile statistics.
 - Add multiple target-pose cases and automated behavioral tests.
 - Experiment with collision scenes and record a visualization/demo.
-- Explore future simulation integration. NVIDIA Isaac Sim, Isaac ROS, CUDA,
-  and Sim-to-Real support are not implemented in this project.
+- Extend the verified Isaac Sim integration with additional scenarios. Isaac ROS,
+  CUDA-specific functionality and Sim-to-Real support are not implemented in this project.
 
 ## License
 

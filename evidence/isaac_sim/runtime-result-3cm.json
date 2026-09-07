@@ -1,0 +1,114 @@
+{
+  "evidence_type": "Single runtime verification result; not a benchmark",
+  "provenance": "Sanitized summary of captured ROS target, TF, joint-state feedback, planned path and node result logs; visual confirmation supplied separately by the user.",
+  "environment": {
+    "isaac_sim": "6.0.1-rc.7+release.42383.32955d8d.gl",
+    "ros_distribution": "Jazzy",
+    "middleware": "Fast DDS"
+  },
+  "application": {
+    "package": "manipulation_core",
+    "executable": "target_pose_subscriber",
+    "cpp_source_changed": false,
+    "execution_sequence": [
+      "PoseStamped on /target_pose",
+      "target_pose_subscriber",
+      "MoveIt plan(plan)",
+      "execute(plan)",
+      "panda_arm_controller",
+      "Isaac Sim Franka motion",
+      "joint-state feedback"
+    ]
+  },
+  "frames": {
+    "planning": "world",
+    "end_effector": "panda_link8"
+  },
+  "units": {
+    "position": "metres",
+    "orientation": "unit quaternion, x/y/z/w",
+    "latency": "milliseconds"
+  },
+  "target_definition": {
+    "description": "Freshly queried current pose plus 0.03 metres along planning-frame X; Y, Z and current orientation preserved.",
+    "displacement_metres": {
+      "x": 0.03,
+      "y": 0.0,
+      "z": 0.0
+    }
+  },
+  "start_pose": {
+    "position": {
+      "x": 0.3512065753111386,
+      "y": -0.6396496221321935,
+      "z": 0.5904747215817381
+    },
+    "orientation_xyzw": {
+      "x": 0.918476812250533,
+      "y": -0.37754581855433494,
+      "z": 0.10880951115443376,
+      "w": -0.04494430478458419
+    }
+  },
+  "target_pose": {
+    "position": {
+      "x": 0.38120657531113855,
+      "y": -0.6396496221321935,
+      "z": 0.5904747215817381
+    },
+    "orientation_xyzw": {
+      "x": 0.918476812250533,
+      "y": -0.37754581855433494,
+      "z": 0.10880951115443376,
+      "w": -0.04494430478458419
+    }
+  },
+  "observed_end_pose": {
+    "position": {
+      "x": 0.3807959065279385,
+      "y": -0.6396935667032257,
+      "z": 0.5890211145303588
+    },
+    "orientation_xyzw": {
+      "x": 0.9187956152181482,
+      "y": -0.37735332069196514,
+      "z": 0.10689155172546828,
+      "w": -0.04464622031452413
+    }
+  },
+  "results": {
+    "planning": {
+      "status": "success",
+      "error_code": 1,
+      "latency_ms": 98.839
+    },
+    "execution": {
+      "status": "success",
+      "error_code": 1,
+      "latency_ms": 3972.122
+    },
+    "total_latency_ms": 4071.073,
+    "measured_x_motion_mm": 29.59,
+    "final_position_error_mm": 1.511,
+    "planned_paths_recorded": 1,
+    "joint_state_feedback_samples": 111,
+    "joint_state_feedback_changed": true,
+    "visible_motion": {
+      "confirmed": true,
+      "confirmation_source": "User observation in the Isaac Sim viewer"
+    }
+  },
+  "controller_action": "/panda_arm_controller/follow_joint_trajectory",
+  "runtime_integration_findings": [
+    "ROS processes ran as ubuntu, matching the running Isaac process, to resolve Fast DDS shared-memory permission issues in this environment.",
+    "The unchanged node was supplied the live MoveIt robot description, semantic model and kinematics parameters, with use_sim_time enabled."
+  ],
+  "measurement_notes": [
+    "Client-side planning latency measures plan(plan); execution latency measures execute(plan), using the existing steady-clock instrumentation.",
+    "Total latency includes intervening logging and handling, excluding target validation and TF transformation.",
+    "The pose target is not a straight-line Cartesian path constraint.",
+    "Joint feedback and the observed endpoint corroborate motion; controller success does not imply zero tracking error.",
+    "This single run does not establish repeatability, latency distributions or performance guarantees.",
+    "The supplied target was already in the planning frame; this run did not exercise cross-frame target transformation."
+  ]
+}
