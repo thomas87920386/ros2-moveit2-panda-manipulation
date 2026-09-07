@@ -33,11 +33,26 @@ One verified Panda demo run completed successfully with joint-state feedback:
   </em>
 </div>
 
-| Measurement | Approximate elapsed time |
-| --- | ---: |
-| Client-side planning latency | 67.6 ms |
-| Execution latency | 3198 ms |
-| Total plan + execute latency | 3266 ms |
+<div align="center">
+<table>
+  <tr>
+    <th>Measurement</th>
+    <th>Approximate elapsed time</th>
+  </tr>
+  <tr>
+    <td>Client-side planning latency</td>
+    <td align="right">67.6 ms</td>
+  </tr>
+  <tr>
+    <td>Execution latency</td>
+    <td align="right">3198 ms</td>
+  </tr>
+  <tr>
+    <td>Total plan + execute latency</td>
+    <td align="right">3266 ms</td>
+  </tr>
+</table>
+</div>
 
 These values are from **one verified runtime test**, not benchmark averages.
 Timing varies by machine, planner state, target pose, and environment.
